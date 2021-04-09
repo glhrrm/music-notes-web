@@ -1,0 +1,25 @@
+.album-container {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0px;
+  cursor: pointer;
+}
+
+.album-container .cover {
+  height: 100px;
+  width: 100px;
+}
+
+.album-container .cover img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-container .info {
+  padding: 10px 20px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: black;
+}

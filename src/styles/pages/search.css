@@ -1,0 +1,26 @@
+#main-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+#search-container {
+  /* flex: 1; */
+  padding: 20px;
+  flex-direction: column;
+}
+
+#search-input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #CCC;
+  font-size: 1.5rem;
+}
+
+#search-result {
+  margin-top: 20px;
+  /* width: 700px; */
+  /* height: 500px; */
+  overflow-y: scroll;
+}
