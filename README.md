@@ -21,7 +21,7 @@ Assim que logar no servidor (`localhost:8080`) você será automaticamente redir
 ## English
 This is the web version of my mobile project [Music Notes](https://github.com/glhrrm/music-notes).
 
-I'm developing it in ReactJS as a way to refresh my knowledge of this library.
+I'm developing it in ReactJS as a way to refresh my knowledge about this library.
 
 The application uses as a server for the Spotify API the __authorization code__ flow defined [in this project](https://github.com/spotify/web-api-auth-examples).
 
