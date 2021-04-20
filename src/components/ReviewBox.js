@@ -3,6 +3,7 @@ import Tag from './Tag'
 import Rating from '@material-ui/lab/Rating'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 import '../styles/components/review-box.css'
+import { getAlbum, updateAlbum } from '../services/firebase'
 
 const ReviewBox = (props) => {
   const id = props.album.id
@@ -11,20 +12,28 @@ const ReviewBox = (props) => {
   const image = props.album.images.find(image => image.width === 300).url
   const year = new Date(props.album.release_date).getFullYear()
 
-  const mockTags = ['psychedelic', 'art pop', 'women']
-  
-  const [review, setReview] = useState('');
+  const [review, setReview] = useState('')
   const [rating, setRating] = useState(0)
-  const [tags, setTags] = useState(mockTags)
+  const [tags, setTags] = useState([])
+  const [updatedAt, setUpdatedAt] = useState(0)
+
+  const updatedAtFormatted = new Date(updatedAt).toLocaleDateString()
 
   useEffect(() => {
-    const today = new Date(Date.now()).toUTCString()
-    document.querySelector('.today').textContent = today
-  }, [review, rating, tags])
+    getAlbum(id)
+      .then(album => {
+        setReview(album.review || '')
+        setRating(album.rating || 0)
+        setTags(album.tags || [])
+        setUpdatedAt(album.updatedAt || 0)
+      })
+  }, [id])
 
-  function addTag() {
-    // TODO
-  }
+  // TODO: validar se é o mesmo álbum (se id for diferente, não atualiza)
+  useEffect(() => {
+    // const album = { id, review, rating, tags }
+    // updateAlbum(album)
+  }, [review, rating, tags])
 
   return (
     <div id="review-container">
@@ -47,15 +56,16 @@ const ReviewBox = (props) => {
       <textarea
         className="review"
         value={review}
-        onChange={e => setReview(e.target.value)} />
+        onChange={e => setReview(e.target.value)}
+      />
       <div className="tags">
-        {mockTags.map((tag, index) => <Tag text={tag} key={index} />)}
+        {tags.map((tag, index) => <Tag text={tag} key={index} />)}
         <button
           className="add-tag"
-          onClick={addTag}>+</button>
+          onClick={null}>+</button>
       </div>
       <span className="review-date">
-        Atualizado em <span className="today">04/04/2021</span>
+        Atualizado em {updatedAtFormatted}
       </span>
     </div>
   )
