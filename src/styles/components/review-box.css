@@ -50,14 +50,14 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .tag {
   display: flex;
   margin: 0px 5px 0px 0px;
   padding: 10px;
-  background-color: teal;
+  background-color: lightseagreen;
   border-radius: 10px;
   font-size: 0.8rem;
   color: #FFF;
@@ -66,20 +66,38 @@
   align-items: center;
 }
 
-.add-tag {
+button {
   margin: 0px;
   width: 30px;
   height: 30px;
-  font-size: 30px;
   color: #FFF;
   border: none;
-  background-color: crimson;
   border-radius: 10px;
   text-align: center;
   line-height: 0;
   cursor: pointer;
 }
 
+button.add-tag {
+  background-color: crimson;
+  font-size: 25px;
+}
+
+button.save {
+  background-color: mediumseagreen;
+  font-size: 20px;
+}
+
+.update {
+  display: inline-flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .review-date {
   font-size: 0.8rem;
+  color: #666;
+  padding-right: 10px;
 }

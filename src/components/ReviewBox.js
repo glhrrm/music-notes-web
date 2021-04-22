@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import Tag from './Tag'
 import Rating from '@material-ui/lab/Rating'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
@@ -19,21 +19,20 @@ const ReviewBox = (props) => {
 
   const updatedAtFormatted = new Date(updatedAt).toLocaleDateString()
 
-  useEffect(() => {
-    getAlbum(id)
-      .then(album => {
-        setReview(album.review || '')
-        setRating(album.rating || 0)
-        setTags(album.tags || [])
-        setUpdatedAt(album.updatedAt || 0)
-      })
+  useEffect(async () => {
+    const album = await getAlbum(id)
+
+    setReview(album && album.review || '')
+    setRating(album && album.rating || 0)
+    setTags(album && album.tags || [])
+    setUpdatedAt(album && album.updatedAt || 0)
   }, [id])
 
-  // TODO: validar se é o mesmo álbum (se id for diferente, não atualiza)
-  useEffect(() => {
-    // const album = { id, review, rating, tags }
-    // updateAlbum(album)
-  }, [review, rating, tags])
+  const update = async () => {
+    const album = { id, review, rating, tags, updatedAt: Date.now() }
+    updateAlbum(album)
+      .then(_ => setUpdatedAt(album.updatedAt))
+  }
 
   return (
     <div id="review-container">
@@ -64,9 +63,16 @@ const ReviewBox = (props) => {
           className="add-tag"
           onClick={null}>+</button>
       </div>
-      <span className="review-date">
-        Atualizado em {updatedAtFormatted}
-      </span>
+      <div className="update">
+        {updatedAt > 0 &&
+          <span className="review-date">
+            Atualizado em {updatedAtFormatted}
+          </span>
+        }
+        <button
+          className="save"
+          onClick={update}>✓</button>
+      </div>
     </div>
   )
 }

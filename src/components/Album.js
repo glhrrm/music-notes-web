@@ -9,7 +9,7 @@ const Album = (props) => {
   const year = new Date(props.release_date).getFullYear()
 
   return (
-    <div className="album-container" onClick={props.onClick}>
+    <div className="album-container" onClick={props.onClick} album-id={id}>
       <div className="cover">
         <img src={image} alt="Album cover" />
       </div>
