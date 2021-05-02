@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react'
+import '../styles/components/tag.css'
 
 const Tag = (props) => {
   const [text, setText] = useState('')
@@ -8,7 +9,15 @@ const Tag = (props) => {
   }, [props])
 
   return (
-    <div className="tag" onChange={e => setText(e.target.value)}>{text}</div>
+    <div
+      className="tag"
+      contentEditable={props.editable}
+      suppressContentEditableWarning={true}
+      role="textbox"
+      onChange={e => setText(e.target.value)}
+      onBlur={props.onBlur}>
+      {text}
+    </div>
   )
 }
 

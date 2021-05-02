@@ -1,4 +1,4 @@
-import { React, useEffect, useRef, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import Tag from './Tag'
 import Rating from '@material-ui/lab/Rating'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
@@ -16,22 +16,35 @@ const ReviewBox = (props) => {
   const [rating, setRating] = useState(0)
   const [tags, setTags] = useState([])
   const [updatedAt, setUpdatedAt] = useState(0)
+  const [newTagCount, setNewTagCount] = useState(0)
 
   const updatedAtFormatted = new Date(updatedAt).toLocaleDateString()
 
   useEffect(async () => {
     const album = await getAlbum(id)
 
-    setReview(album && album.review || '')
-    setRating(album && album.rating || 0)
-    setTags(album && album.tags || [])
-    setUpdatedAt(album && album.updatedAt || 0)
+    setReview((album && album.review) || '')
+    setRating((album && album.rating) || 0)
+    setTags((album && album.tags) || [])
+    setUpdatedAt((album && album.updatedAt) || 0)
   }, [id])
 
   const update = async () => {
-    const album = { id, review, rating, tags, updatedAt: Date.now() }
-    updateAlbum(album)
-      .then(_ => setUpdatedAt(album.updatedAt))
+    const newAlbum = { review, rating, tags, updatedAt: Date.now() }
+
+    // ideal seria comparar com o álbum atual, mas 'album' retorna undefined
+    // JSON.stringify(album) !== JSON.stringify(newAlbum)
+
+    updateAlbum(id, newAlbum)
+      .then(_ => setUpdatedAt(newAlbum.updatedAt))
+  }
+
+  const saveTag = (text) => {
+    text.length > 0 && !tags.includes(text) && tags.push(text) && setNewTagCount(newTagCount - 1)
+  }
+
+  const addTag = () => {
+    setNewTagCount(newTagCount + 1)
   }
 
   return (
@@ -58,17 +71,23 @@ const ReviewBox = (props) => {
         onChange={e => setReview(e.target.value)}
       />
       <div className="tags">
-        {tags.map((tag, index) => <Tag text={tag} key={index} />)}
+        {tags.map((tag, index) => <Tag editable={false} text={tag} key={index} />)}
+        {[...Array(newTagCount)].map((_, i) =>
+          <Tag
+            editable={true}
+            key={i}
+            onBlur={e => saveTag(e.target.innerText)}
+          />
+        )}
         <button
           className="add-tag"
-          onClick={null}>+</button>
+          onClick={addTag}>+</button>
       </div>
       <div className="update">
         {updatedAt > 0 &&
           <span className="review-date">
             Atualizado em {updatedAtFormatted}
-          </span>
-        }
+          </span>}
         <button
           className="save"
           onClick={update}>✓</button>

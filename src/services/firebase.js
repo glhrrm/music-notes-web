@@ -17,15 +17,10 @@ const getAlbum = async (id) => {
   return snapshot && snapshot.val()
 }
 
-const updateAlbum = async (album) => {
+const updateAlbum = async (id, album) => {
   auth()
 
-  // depois de remover as informações redundantes do banco será possível aplicar o método set() para todos os casos
-  if (await getAlbum(album.id)) {
-    ref.child(album.id).update(album)
-  } else {
-    ref.child(album.id).set(album)
-  }
+  ref.child(id).set(album)
 }
 
 export { getAlbum, updateAlbum }
