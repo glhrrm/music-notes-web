@@ -16,7 +16,7 @@ Clone [este repositório](https://github.com/spotify/web-api-auth-examples) e si
 ~~~
 yarn start
 ~~~
-Assim que logar no servidor (`localhost:8080`) você será automaticamente redirecionado à aplicação.
+Assim que logar no servidor (`localhost:8888`) você será automaticamente redirecionado à aplicação.
 
 ## English
 This is the web version of my mobile project [Music Notes](https://github.com/glhrrm/music-notes).
@@ -34,4 +34,4 @@ Clone [this repository](https://github.com/spotify/web-api-auth-examples) and fo
 ~~~
 yarn start
 ~~~
-As soon as you log in to the server (`localhost:8080`) you'll be automatically redirected to the application.
+As soon as you log in to the server (`localhost:8888`) you'll be automatically redirected to the application.
