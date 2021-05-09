@@ -22,4 +22,5 @@
   flex-direction: column;
   justify-content: center;
   color: black;
+  overflow: hidden;
 }

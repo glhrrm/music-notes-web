@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import Tag from './Tag'
 import Rating from '@material-ui/lab/Rating'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
@@ -20,27 +20,33 @@ const ReviewBox = (props) => {
 
   const updatedAtFormatted = new Date(updatedAt).toLocaleDateString()
 
-  useEffect(async () => {
-    const album = await getAlbum(id)
+  const album = useRef()
 
-    setReview((album && album.review) || '')
-    setRating((album && album.rating) || 0)
-    setTags((album && album.tags) || [])
-    setUpdatedAt((album && album.updatedAt) || 0)
+  useEffect(async () => {
+    album.current = await getAlbum(id)
+
+    setReview((album.current && album.current.review) || '')
+    setRating((album.current && album.current.rating) || 0)
+    setTags((album.current && album.current.tags) || [])
+    setUpdatedAt((album.current && album.current.updatedAt) || 0)
   }, [id])
 
   const update = async () => {
-    const newAlbum = { review, rating, tags, updatedAt: Date.now() }
+    const { updatedAt, ...oldAlbum } = album.current || { updatedAt: 0 }
+    const newAlbum = { rating, review, tags }
 
-    // ideal seria comparar com o álbum atual, mas 'album' retorna undefined
-    // JSON.stringify(album) !== JSON.stringify(newAlbum)
-
-    updateAlbum(id, newAlbum)
-      .then(_ => setUpdatedAt(newAlbum.updatedAt))
+    if (newAlbum.rating > 0 && JSON.stringify(oldAlbum) !== JSON.stringify(newAlbum)) {
+      newAlbum.updatedAt = Date.now()
+      updateAlbum(id, newAlbum)
+        .then(_ => setUpdatedAt(newAlbum.updatedAt))
+    }
   }
 
   const saveTag = (text) => {
-    text.length > 0 && !tags.includes(text) && tags.push(text) && setNewTagCount(newTagCount - 1)
+    text.length > 0
+      && !tags.includes(text)
+      && tags.push(text)
+      && setNewTagCount(newTagCount - 1)
   }
 
   const addTag = () => {
@@ -71,13 +77,18 @@ const ReviewBox = (props) => {
         onChange={e => setReview(e.target.value)}
       />
       <div className="tags">
-        {tags.map((tag, index) => <Tag editable={false} text={tag} key={index} />)}
+        {/* TODO: como notificar se a tag foi excluída? */}
+        {tags.map((tag, i) =>
+          <Tag
+            editable={false}
+            text={tag}
+            key={i} />
+        )}
         {[...Array(newTagCount)].map((_, i) =>
           <Tag
             editable={true}
             key={i}
-            onBlur={e => saveTag(e.target.innerText)}
-          />
+            onBlur={e => saveTag(e.target.innerText)} />
         )}
         <button
           className="add-tag"

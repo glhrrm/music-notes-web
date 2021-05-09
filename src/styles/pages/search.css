@@ -1,11 +1,10 @@
 #main-container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 500px;
   height: 100vh;
 }
 
 #search-container {
-  /* flex: 1; */
   padding: 20px;
   flex-direction: column;
 }
@@ -20,7 +19,4 @@
 
 #search-result {
   margin-top: 20px;
-  /* width: 700px; */
-  /* height: 500px; */
-  overflow-y: scroll;
 }

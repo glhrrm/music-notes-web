@@ -44,6 +44,7 @@
   text-align: start;
   resize: none;
   font-size: 1rem;
+  overflow-y: hidden;
 }
 
 .tags {
@@ -51,19 +52,6 @@
   flex-direction: row;
   width: 100%;
   margin-bottom: 10px;
-}
-
-.tag {
-  display: flex;
-  margin: 0px 5px 0px 0px;
-  padding: 10px;
-  background-color: lightseagreen;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  color: #FFF;
-  width: fit-content;
-  height: 30px;
-  align-items: center;
 }
 
 button {
