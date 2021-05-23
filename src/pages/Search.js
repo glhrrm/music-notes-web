@@ -2,6 +2,7 @@ import React from 'react'
 import SpotifyWebApi from 'spotify-web-api-js'
 import Album from '../components/Album'
 import ReviewBox from '../components/ReviewBox'
+import Sidebar from '../components/Sidebar'
 import '../styles/pages/search.css'
 
 const spotifyApi = new SpotifyWebApi()
@@ -56,9 +57,11 @@ class Search extends React.Component {
   render() {
     return (
       <div id="main-container">
+        <Sidebar />
         <div id="search-container">
           <input
             id="search-input"
+            placeholder="Busque um artista ou álbum"
             value={this.state.inputValue}
             onChange={e => this.handleChange(e)} />
           <div id="search-result">

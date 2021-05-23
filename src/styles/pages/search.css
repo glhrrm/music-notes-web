@@ -1,6 +1,6 @@
 #main-container {
   display: grid;
-  grid-template-columns: 1fr 500px;
+  grid-template-columns: 150px 1fr 500px;
   height: 100vh;
 }
 
@@ -10,11 +10,16 @@
 }
 
 #search-input {
-  width: 300px;
+  width: 70%;
   padding: 10px;
   border-radius: 10px;
-  border: 2px solid #CCC;
+  border: 2px solid #ccc;
   font-size: 1.5rem;
+  color: #333;
+}
+
+#search-input::placeholder {
+  color: #888;
 }
 
 #search-result {
